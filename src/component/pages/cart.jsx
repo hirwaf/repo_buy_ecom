@@ -4,27 +4,53 @@ import SearchIcon from '@material-ui/icons/Search';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import { useHistory } from "react-router-dom";
 import FacebookIcon from '@material-ui/icons/Facebook';
+import { AddProduct,DelectProduct } from '../redux/reducer/rootReducer'
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import StarIcon from '@material-ui/icons/Star';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { TransverseLoading } from 'react-loadingg'
+import { removeFromCart } from '../redux/reducer/rootReducer'
+import {useDispatch} from 'react-redux'
+import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
+import images2 from 'react-payment-inputs/images';
+import {useSelector} from 'react-redux'
 const Cart = () => {
     const [isLoaded, setIsLoaded] =useState(false);
-    const [count, setCount] = useState(0);
+    const dispatch= useDispatch()
+    const state=useSelector((state)=>state.cart.cartItems)
     const history = useHistory();
+    const [open, setOpen] = useState(false);
+    const {
+        wrapperProps,
+        getCardImageProps,
+        getCardNumberProps,
+        getExpiryDateProps,
+        getCVCProps
+      } = usePaymentInputs();
+    
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+  
     useEffect(() => {
         setTimeout(() => {
             if(isLoaded === false){}
         setIsLoaded(true);
         }, 3000);
     }, [isLoaded]);
-    useEffect(() => {
-    if(count<= 1){
-        setCount(1)
-    }
-    },[count])
     return (
         <div>
             {isLoaded === true ?
@@ -101,82 +127,32 @@ const Cart = () => {
             <br/>
 <div className="row col-12" id="cart_body">
                 <div className="col-8">
-<div className="row col-12" id="div_for_all_cart_product">
-    <div className="col-3" id="div_have_image">
-    <img src="https://www.forever21.com/images/default_330/00415149-01.jpg" className="class_for_image" alt="image_added_to_Cart"/>
-    </div>
-    <div className="col-6"style={{fontFamily:`"Dosis", sans-serif`}}>
-                <p id="name_of_cart_product">Blue denim shirt</p>
-                <p>Blue denim shirt</p>
-                <p>SHIRT - BLUE</p>
-                <p>SIZE: M</p>
-                <button id="romeve_Item"><DeleteIcon/>REMOVE ITEM</button>
-</div>
-<div className="col-3">
-<ButtonGroup  aria-label="outlined primary button group" id="slkdmd">
-  <Button style={{fontWeight:"bold"}}onClick={() =>{ 
-      setCount(count - 1)}}>-</Button>
-            <Button>{count}</Button>
-  <Button style={{fontWeight:"bold"}}onClick={() => setCount(count + 1)}>+</Button>
-</ButtonGroup>
-<p className="sdmlxs">100Frw</p>
-</div>
-<div className="col-3" id="div_have_image">
-    <img src="https://www.forever21.com/images/default_330/00415149-01.jpg" className="class_for_image" alt="image_added_to_Cart"/>
-    </div>
-    <div className="col-6"style={{fontFamily:`"Dosis", sans-serif`}}>
-                <p id="name_of_cart_product">Blue denim shirt</p>
-                <p>Blue denim shirt</p>
-                <p>SHIRT - BLUE</p>
-                <p>SIZE: M</p>
-                <button id="romeve_Item"><DeleteIcon/>REMOVE ITEM</button>
-</div>
-<div className="col-3">
-<ButtonGroup  aria-label="outlined primary button group" id="slkdmd">
-  <Button style={{fontWeight:"bold"}}>-</Button>
-  <Button>1</Button>
-  <Button style={{fontWeight:"bold"}}>+</Button>
-</ButtonGroup>
-<p className="sdmlxs">100Frw</p>
-</div>
-<div className="col-3" id="div_have_image">
-    <img src="https://www.forever21.com/images/default_330/00415149-01.jpg" className="class_for_image" alt="image_added_to_Cart"/>
-    </div>
-    <div className="col-6"style={{fontFamily:`"Dosis", sans-serif`}}>
-                <p id="name_of_cart_product">Blue denim shirt</p>
-                <p>Blue denim shirt</p>
-                <p>SHIRT - BLUE</p>
-                <p>SIZE: M</p>
-                <button id="romeve_Item"><DeleteIcon/>REMOVE ITEM</button>
-</div>
-<div className="col-3">
-<ButtonGroup  aria-label="outlined primary button group" id="slkdmd">
-  <Button style={{fontWeight:"bold"}}>-</Button>
-  <Button>1</Button>
-  <Button style={{fontWeight:"bold"}}>+</Button>
-</ButtonGroup>
-<p className="sdmlxs">100Frw</p>
-</div>
-<hr id="sdkld"/>
-<div className="col-3" id="div_have_image">
-    <img src="https://www.forever21.com/images/default_330/00415149-01.jpg" className="class_for_image" alt="image_added_to_Cart"/>
-    </div>
-    <div className="col-6"style={{fontFamily:`"Dosis", sans-serif`}}>
-                <p id="name_of_cart_product">Blue denim shirt</p>
-                <p>Blue denim shirt</p>
-                <p>SHIRT - BLUE</p>
-                <p>SIZE: M</p>
-                <button id="romeve_Item"><DeleteIcon/>REMOVE ITEM</button>
-</div>
-<div className="col-3">
-<ButtonGroup  aria-label="outlined primary button group" id="slkdmd">
-  <Button style={{fontWeight:"bold"}}>-</Button>
-  <Button>1</Button>
-  <Button style={{fontWeight:"bold"}}>+</Button>
-</ButtonGroup>
-<p className="sdmlxs">100Frw</p>
-</div>
-</div>
+
+    {state.map((product) =>{
+        return (
+            <div className="row col-12" id="div_for_all_cart_product" key={product.id}>
+            <div className="col-3" id="div_have_image">
+            <img src={`${product.image[0].src}`} id="imgSize" alt={'imgSize'}/>
+            </div>
+            <div className="col-6"style={{fontFamily:`"Dosis", sans-serif`}}>
+        <p id="name_of_cart_product">{product.name}</p>
+                        <p>{product.disce}</p>
+                        <p>{product.name}</p>
+                        <p>SIZE: M</p>
+                        <button id="romeve_Item" onClick={()=>dispatch(removeFromCart(product))}><DeleteIcon/>REMOVE ITEM</button>
+        </div>
+        <div className="col-3">
+        <ButtonGroup  aria-label="outlined primary button group" id="slkdmd">
+          <Button style={{fontWeight:"bold"}} onClick={()=>dispatch(DelectProduct(product))}>-</Button>
+                    <Button>{product.count}</Button>
+          <Button style={{fontWeight:"bold"}} onClick={()=>dispatch(AddProduct(product))}>+</Button>
+        </ButtonGroup>
+          <p className="sdmlxs"> {product.count * product.price }Frw</p>
+        </div>
+        </div>
+        )
+    })}
+ 
                 </div>
                 <div className="col-4" id="div_with_payment">
                 <div >
@@ -187,7 +163,7 @@ const Cart = () => {
 
                         </div>
                         <div className="col-3">
-                        50Frw
+                       { state.reduce((a, c) => a + c.price * c.count, 0)}Frw
 </div>
                         <div className="col-9"style={{paddingBottom:"12px"}}>
                         Shipping
@@ -205,10 +181,42 @@ const Cart = () => {
 
                         </div>
                         <div className="col-3">
-                        50Frw
+                       { state.reduce((a, c) => a + c.price * c.count, 0)}Frw
 </div>
 <div className="col-12">
-<button className="btn btn" id="buyButtom">BUY</button>
+<button className="btn btn" id="buyButtom"onClick={handleClickOpen}>BUY</button>
+<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" className="modelMode">
+        <DialogTitle id="form-dialog-title">Payment</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+           <div className="row col-12" id="all_pay_op">
+               <div className="col-4">
+               <img style={{width:"100%",height:"15vh",paddingBottom:"12px"}} src={`https://img.talkandroid.com/uploads/2015/09/google-wallet-new-logo.png`} alt="sd"/>
+               </div>
+               <div className="col-4">
+               <img style={{width:"100%",height:"15vh",paddingBottom:"17px"}} src={`https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJQ_7-ZZkDNkvpwxeIddovjUWR5kEvGo9vyy0JcRpvfQ&usqp=CAU&ec=45714077`} alt="sd"/>
+               </div>
+               <div className="col-4">
+               <img style={{width:"100%",height:"15vh",paddingBottom:"16px"}} src={`https://www.b-payment.com/docs/images/logos/Visa_logo.png`} alt="sd"/>
+               </div>
+           </div>
+          </DialogContentText>
+           <PaymentInputsWrapper {...wrapperProps}>
+      <img {...getCardImageProps({ images2 })} />
+      <input {...getCardNumberProps()} />
+      <input {...getExpiryDateProps()} />
+      <input {...getCVCProps()} />
+    </PaymentInputsWrapper>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
 </div>
                     </div>
                    <div>

@@ -15,7 +15,6 @@ const Games = () => {
     useEffect(() => {
         setTimeout(() => {
           setIsLoaded(true);
-          console.log(isLoaded)
         }, 3000);
       }, [isLoaded]);
     return (

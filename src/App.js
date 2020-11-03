@@ -7,6 +7,8 @@ import {
   Redirect,
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
+import { Provider } from 'react-redux'
+import Store from './component/redux/store'
 import Home from './component/pages/index'
 import Buy from './component/pages/buy'
 import Account from './component/pages/account'
@@ -26,6 +28,7 @@ function App() {
     <ToastProvider
   >
     <UserContext.Provider value={[user, setUser]}>
+      <Provider store={Store}>
     <Router>
       <Switch>
         <Route exact path="/" component={Home}></Route>
@@ -43,6 +46,7 @@ function App() {
         <Redirect to="/404" />
       </Switch>
     </Router>
+    </Provider>
     </UserContext.Provider>
     </ToastProvider>
   );

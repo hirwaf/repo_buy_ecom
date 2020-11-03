@@ -10,11 +10,15 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { TransverseLoading } from 'react-loadingg'
+import { addToCart } from '../redux/reducer/rootReducer'
 import {getFromStorage} from '../storoge'
+import {useDispatch} from 'react-redux'
 const Buy = () => {
     const history = useHistory();
+    const dispatch= useDispatch()
     const [instork ,setInstork] = React.useState(false)
     const [isLoaded, setIsLoaded] = React.useState(false);
+
     let dataProduct =  getFromStorage('product')
     useEffect(() => {
         setTimeout(() => {
@@ -31,7 +35,9 @@ const Buy = () => {
     
     }
     const addtoCart = () =>{
+        dispatch(addToCart(dataProduct))
         setInstork(true)
+      
     } 
     return (
         <div>

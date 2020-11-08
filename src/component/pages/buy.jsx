@@ -137,7 +137,7 @@ const Buy = () => {
                 </div>
                 
                 <div className="col-2">
-                <p id="price_for_product">{dataProduct.price}</p>
+                <p id="price_for_product">{dataProduct.price}Frw</p>
                 </div>
                 <button className="btn btn" id="button_of_add_to_cart"onClick={addtoCart}>ADD TO CART </button>
                 </div>

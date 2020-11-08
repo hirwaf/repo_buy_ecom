@@ -18,6 +18,7 @@ import Create from './component/pages/create_account'
 import Errors from './component/pages/Errors'
 import Men from './component/pages/men'
 import Kids from './component/pages/kids'
+import HomePage from './component/pages/homepage'
 import Game from './component/pages/game'
 import Electronics from './component/pages/electronics'
 import Improvement from './component/pages/improvement'
@@ -34,6 +35,7 @@ function App() {
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/buy" component={Buy}></Route>
         <Route exact path="/men" component={Men}></Route>
+        <Route exact path="/home" component={HomePage}></Route>
         <Route exact path="/kids" component={Kids}></Route>
         <Route exact path="/game" component={Game}></Route>
         <Route exact path="/electronics" component={Electronics}></Route>

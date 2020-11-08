@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { AddProduct,DelectProduct } from '../redux/reducer/rootReducer'
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,6 +13,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import StarIcon from '@material-ui/icons/Star';
+import HourglassEmptyRoundedIcon from '@material-ui/icons/HourglassEmptyRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { TransverseLoading } from 'react-loadingg'
@@ -49,6 +49,7 @@ const Cart = () => {
         setTimeout(() => {
             if(isLoaded === false){}
         setIsLoaded(true);
+        console.log(state.length);
         }, 3000);
     }, [isLoaded]);
     return (
@@ -125,6 +126,7 @@ const Cart = () => {
             </nav>
 
             <br/>
+            {state.length > 0 ? 
 <div className="row col-12" id="cart_body">
                 <div className="col-8">
 
@@ -202,17 +204,17 @@ const Cart = () => {
            </div>
           </DialogContentText>
            <PaymentInputsWrapper {...wrapperProps}>
-      <img {...getCardImageProps({ images2 })} />
+      <svg {...getCardImageProps({ images2 })} alt={images2}/>
       <input {...getCardNumberProps()} />
       <input {...getExpiryDateProps()} />
       <input {...getCVCProps()} />
     </PaymentInputsWrapper>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary" style={{outline:"none",color:'#696969'}}>
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary" style={{outline:"none",color:'#696969'}}>
             OK
           </Button>
         </DialogActions>
@@ -249,7 +251,18 @@ PayPal
                 </div>
 </div>
 </div>
-
+: <div className="col-12" style={{textAlign:"center"}}>
+  <HourglassEmptyRoundedIcon id="svgEmpty"/>
+  <p id="empty">YOUR CART IS EMPTY</p>
+  <p id="empty_small">Continue Shopping</p>
+  <div id="all_buttom"><Button onClick={()=>history.push('/')}>Women</Button>
+  <Button  onClick={()=>history.push('/kids')}>Kids</Button>
+  <Button onClick={()=>history.push('/men')}>Men</Button>
+  </div>
+  <Button onClick={()=>history.push('/home_improvement')}>Home Improvement</Button>
+  <Button onClick={()=>history.push('/game')}>Video-Games</Button>
+  <Button onClick={()=>history.push('/electronics')}>Electronics</Button>
+  </div>}
 
         </div>
             </div>

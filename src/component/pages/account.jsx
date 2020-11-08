@@ -66,8 +66,8 @@ import StarIcon from '@material-ui/icons/Star';
                        <div className="col-6">
                        <ul className="float-right" id="sideList">
                       <li>Frw</li>
-                      <li onClick={()=>history.push('/account/:name')}><PersonOutlineRoundedIcon/></li>
-                      <li onClick={()=>history.push('/account/:name')}>ACCOUNT</li>   
+                      <li onClick={()=>history.push('/account/:name')} id="actions"><PersonOutlineRoundedIcon/></li>
+                      <li onClick={()=>history.push('/account/:name')} id="actions">ACCOUNT</li>   
                       <li onClick={()=>history.push('/cart')}><ShoppingCartOutlinedIcon/></li>  
                   </ul>
            
